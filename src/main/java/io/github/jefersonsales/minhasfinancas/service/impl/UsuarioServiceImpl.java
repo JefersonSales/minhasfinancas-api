@@ -1,14 +1,12 @@
 package io.github.jefersonsales.minhasfinancas.service.impl;
 
-import io.github.jefersonsales.minhasfinancas.DTO.UsuarioDTO;
+import io.github.jefersonsales.minhasfinancas.DTO.UserDTO;
 import io.github.jefersonsales.minhasfinancas.exception.ErroAutenticacao;
 import io.github.jefersonsales.minhasfinancas.exception.RegraNegocioException;
 import io.github.jefersonsales.minhasfinancas.model.entity.Usuario;
 import io.github.jefersonsales.minhasfinancas.model.repository.UsuarioRepository;
 import io.github.jefersonsales.minhasfinancas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +28,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     @Override
-    public List<UsuarioDTO> allUser(Pageable pageable) {
+    public List<UserDTO> allUser(Pageable pageable) {
         return  usuarioRepository.findAll(pageable)
-                .stream().map(UsuarioDTO::new).collect(Collectors.toList());
+                .stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
     @Override
@@ -62,5 +60,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(existe){
             throw new RegraNegocioException("Já existe um Usuário cadastrado com este e-mail.");
         }
+    }
+
+    @Override
+    public Optional<Usuario> obterPorID(Long id) {
+        return usuarioRepository.findById(id);
     }
 }

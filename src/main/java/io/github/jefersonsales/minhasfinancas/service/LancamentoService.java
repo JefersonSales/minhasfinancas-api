@@ -4,6 +4,7 @@ import io.github.jefersonsales.minhasfinancas.model.entity.Lancamento;
 import io.github.jefersonsales.minhasfinancas.model.enums.StatusLancamento;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LancamentoService {
 
@@ -18,5 +19,8 @@ public interface LancamentoService {
     void atualizarStatus(Lancamento lancamento, StatusLancamento statusLancamento);
 
    void validar(Lancamento lancamento);
+
+   Optional<Lancamento> obterPorId(Long id);
+
 
 }

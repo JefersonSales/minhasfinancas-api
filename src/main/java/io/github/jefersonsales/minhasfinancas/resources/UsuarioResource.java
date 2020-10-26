@@ -1,6 +1,6 @@
-package io.github.jefersonsales.minhasfinancas.api.resource;
+package io.github.jefersonsales.minhasfinancas.resources;
 
-import io.github.jefersonsales.minhasfinancas.api.dto.UsuarioDTO;
+import io.github.jefersonsales.minhasfinancas.DTO.UsuarioDTO;
 import io.github.jefersonsales.minhasfinancas.exception.ErroAutenticacao;
 import io.github.jefersonsales.minhasfinancas.exception.RegraNegocioException;
 import io.github.jefersonsales.minhasfinancas.model.entity.Usuario;
