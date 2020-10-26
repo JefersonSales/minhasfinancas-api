@@ -1,9 +1,11 @@
 package io.github.jefersonsales.minhasfinancas.resources;
 
+import io.github.jefersonsales.minhasfinancas.DTO.AtualizaStatusDTO;
 import io.github.jefersonsales.minhasfinancas.DTO.UsuarioDTO;
 import io.github.jefersonsales.minhasfinancas.exception.ErroAutenticacao;
 import io.github.jefersonsales.minhasfinancas.exception.RegraNegocioException;
 import io.github.jefersonsales.minhasfinancas.model.entity.Usuario;
+import io.github.jefersonsales.minhasfinancas.model.enums.StatusLancamento;
 import io.github.jefersonsales.minhasfinancas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ public class UsuarioResource {
             return ResponseEntity.badRequest().body(e.getMessage());
        }
    }
+
 
    @PostMapping
    public ResponseEntity salvar(@RequestBody UsuarioDTO dto){

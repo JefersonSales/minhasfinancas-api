@@ -1,5 +1,6 @@
 package io.github.jefersonsales.minhasfinancas.resources;
 
+import io.github.jefersonsales.minhasfinancas.DTO.AtualizaStatusDTO;
 import io.github.jefersonsales.minhasfinancas.DTO.LancamentoDTO;
 import io.github.jefersonsales.minhasfinancas.exception.RegraNegocioException;
 import io.github.jefersonsales.minhasfinancas.model.entity.Lancamento;
@@ -75,6 +76,26 @@ public class LancamentoResources {
 
     }).orElseGet(() -> new ResponseEntity("Lançamento não encontrdo na base da dados.", HttpStatus.BAD_REQUEST));
   }
+
+
+  @PutMapping("{id}/atualiza-status")
+  public ResponseEntity atualizarStatus(@PathVariable("id") Long id, @RequestBody AtualizaStatusDTO dto){
+    return service.obterPorId(id).map(entity -> {
+      StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+      if(statusSelecionado == null){
+        return ResponseEntity.badRequest().body("Não foi possível atualizar o status do lançamento, envie um status válido");
+      }
+      try {
+        entity.setStatus(statusSelecionado);
+        service.atualizar(entity);
+        return ResponseEntity.ok(entity);
+      }catch (RegraNegocioException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+      }
+
+    }).orElseGet(() -> new ResponseEntity("Lançamento não encontrdo na base da dados.", HttpStatus.BAD_REQUEST));
+  }
+
 
   @DeleteMapping("{id}")
   public ResponseEntity deletar(@PathVariable("id") Long id) {
