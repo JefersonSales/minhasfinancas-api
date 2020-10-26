@@ -3,6 +3,7 @@ package io.github.jefersonsales.minhasfinancas.service.impl;
 import io.github.jefersonsales.minhasfinancas.exception.RegraNegocioException;
 import io.github.jefersonsales.minhasfinancas.model.entity.Lancamento;
 import io.github.jefersonsales.minhasfinancas.model.enums.StatusLancamento;
+import io.github.jefersonsales.minhasfinancas.model.enums.TipoLancamento;
 import io.github.jefersonsales.minhasfinancas.model.repository.LancamentoRepository;
 import io.github.jefersonsales.minhasfinancas.service.LancamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,21 @@ public class LancamentoServiceImpl implements LancamentoService {
   @Override
   public Optional<Lancamento> obterPorId(Long id) {
     return repository.findById(id);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public BigDecimal obterSaldoPorUsuario(Long id) {
+    BigDecimal receitas = repository.obterSaldoPorTipoEUsuario(id, TipoLancamento.RECEITA);
+    BigDecimal despesas = repository.obterSaldoPorTipoEUsuario(id, TipoLancamento.DESPESA);
+
+    if (receitas == null){
+      receitas = BigDecimal.ZERO;
+    }
+    if(despesas == null){
+      despesas = BigDecimal.ZERO;
+    }
+
+    return receitas.subtract(despesas);
   }
 }
